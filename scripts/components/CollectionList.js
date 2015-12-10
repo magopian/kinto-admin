@@ -56,7 +56,7 @@ class Row extends Component {
 
   recordField(displayField) {
     if (this.props.record.hasOwnProperty(displayField)) {
-      return String(this.props.record[displayField]);
+      return JSON.stringify(this.props.record[displayField]);
     }
     return "<unknown>";
   }

@@ -99,6 +99,8 @@ class SchemaField extends React.Component {
       array:  ArrayField,
       boolean: BooleanField,
       object: ObjectField,
+      number: StringField,
+      "date-time": StringField,
     };
   }
 

@@ -3,7 +3,10 @@
     "name": "Todo tasks",
     "synced": true,
     "config": {
-      "displayFields": ["title", "done"],
+      "displayFields": [
+        "title",
+        "done"
+      ],
       "schema": {
         "title": "Todo Tasks",
         "description": "Tasks collection.",
@@ -25,6 +28,82 @@
             "description": "The task title.",
             "minLength": 1,
             "default": ""
+          }
+        }
+      }
+    }
+  },
+  "kinto_demo_leaflet": {
+    "name": "Kinto Leaflet Demo",
+    "synced": true,
+    "config": {
+      "displayFields": [
+        "latlng"
+      ],
+      "schema": {
+        "title": "Markers",
+        "description": "Markers.",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "latlng"
+        ],
+        "properties": {
+          "latlng": {
+            "title": "LatLong",
+            "description": "Latitude and longitude",
+            "type": "object",
+            "properties": {
+              "lat": {
+                "type": "number"
+              },
+              "lng": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "lat",
+              "lng"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "kinto_demo_calendar": {
+    "name": "Kinto Calendar Demo",
+    "synced": true,
+    "config": {
+      "displayFields": [
+        "start",
+        "end",
+        "title"
+      ],
+      "schema": {
+        "title": "Events",
+        "description": "Events.",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "start",
+          "end",
+          "title"
+        ],
+        "properties": {
+          "start": {
+            "title": "Start Date",
+            "description": "The start date, YYYY-MM-DD",
+            "type": "date-time"
+          },
+          "end": {
+            "title": "End Date",
+            "description": "The end date, YYYY-MM-DD",
+            "type": "date-time"
+          },
+          "title": {
+            "title": "Event title",
+            "description": "The title of the event",
+            "type": "string"
           }
         }
       }
