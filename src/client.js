@@ -8,7 +8,8 @@ let client: ?KintoClient;
 
 function getAuthHeader(auth: AuthData): ?string {
   switch (auth.authType) {
-    case "fxa": {
+    case "fxa":
+    case "openidconnect": {
       const { token }: { token: string } = auth.credentials;
       return "Bearer " + token;
     }

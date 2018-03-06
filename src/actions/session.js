@@ -106,6 +106,16 @@ function navigateToFxA(server: string, redirect: string): NavigationResult {
   return { type: null };
 }
 
+function navigateToOpenIDConnect(
+  server: string,
+  redirect: string
+): NavigationResult {
+  document.location.href = `${server}/fxa-oauth/login?redirect=${encodeURIComponent(
+    redirect
+  )}`;
+  return { type: null };
+}
+
 function postToPortier(server: string, redirect: string): NavigationResult {
   // Alter the AuthForm to make it posting Portier auth information to the
   // dedicated Kinto server endpoint. This is definitely one of the ugliest
@@ -152,6 +162,8 @@ export function navigateToExternalAuth(authFormData: Object): NavigationResult {
       return navigateToFxA(server, redirect);
     } else if (authType === "portier") {
       return postToPortier(server, redirect);
+    } else if (authType === "openidconnect") {
+      return navigateToOpenIDConnect(server, redirect);
     } else {
       return notifyError(`Unsupported auth navigation type "${authType}".`);
     }

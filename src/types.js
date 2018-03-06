@@ -61,6 +61,7 @@ export type Capabilities = {
   permissions_endpoint?: Object,
   schema?: Object,
   signer?: Object,
+  openid?: Object
 };
 
 export type ClientError = {
@@ -292,7 +293,8 @@ export type AuthMethod =
   | "fxa"
   | "ldap"
   | "basicauth"
-  | "portier";
+  | "portier"
+  | "openidconnect";
 
 export type SettingsState = {
   maxPerPage: number,
@@ -306,7 +308,8 @@ export type AuthData =
   | LDAPAuth
   | AccountAuth
   | BasicAuth
-  | TokenAuth;
+  | TokenAuth
+  | OpenIDAuth;
 
 export type AnonymousAuth = {
   authType: "anonymous",
@@ -344,8 +347,16 @@ export type TokenAuth = {
   authType: "fxa",
   server: string,
   credentials: {
-    token: string,
-  },
+    token: string
+  }
+};
+
+export type OpenIDAuth = {
+  authType: "openidconnect",
+  server: string,
+  credentials: {
+    token: string
+  }
 };
 
 export type SagaGen = Generator<*, void, *>;

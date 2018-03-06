@@ -109,9 +109,9 @@ const baseAuthSchema = {
     authType: {
       type: "string",
       title: "Authentication method",
-      enum: ["basicauth", "account", "fxa", "ldap"],
-    },
-  },
+      enum: ["basicauth", "account", "fxa", "ldap", "openidconnect"]
+    }
+  }
 };
 
 const baseUISchema = {
@@ -204,9 +204,23 @@ const authSchemas = {
             </a>
             plugin must be installed on the target server.
           </span>
-        ),
-      },
+        )
+      }
+    }
+  },
+  openidconnect: {
+    schema: {
+      ...baseAuthSchema,
+      properties: {
+        ...baseAuthSchema.properties
+      }
     },
+    uiSchema: {
+      ...baseUISchema,
+      credentials: {
+        password: { "ui:widget": "password" }
+      }
+    }
   },
   ldap: {
     schema: {
@@ -276,6 +290,7 @@ const authLabels = {
   fxa: "Firefox Account",
   ldap: "LDAP",
   portier: "Portier",
+  openidconnect: "OpenID Connect"
 };
 
 /**
@@ -376,7 +391,12 @@ export default class AuthForm extends PureComponent<
   onChange = ({ formData }: { formData: Object }) => {
     const { authType } = formData;
     const { schema, uiSchema } = authSchemas[authType];
-    const specificFormData = ["anonymous", "fxa", "portier"].includes(authType)
+    const specificFormData = [
+      "anonymous",
+      "fxa",
+      "portier",
+      "openidconnect"
+    ].includes(authType)
       ? omit(formData, ["credentials"])
       : { credentials: {}, ...formData };
     return this.setState({
@@ -393,7 +413,8 @@ export default class AuthForm extends PureComponent<
     const extendedFormData = { ...formData, redirectURL };
     switch (authType) {
       case "fxa":
-      case "portier": {
+      case "portier":
+      case "openidconnect": {
         return navigateToExternalAuth(extendedFormData);
       }
       // case "anonymous":
